@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HAKUNA | Your Crown, Perfected</title>
+  <meta name="description" content="Premium Nigerian Human Hair — Wigs, Extensions & Styling by Abuja Experts."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+  <link rel="stylesheet" href="styles.css"/>
+
+  <!-- ============================================================
+       FIREBASE SDK (v10 modular — loaded as compat for simplicity)
+       Replace the firebaseConfig values in firebase-config.js
+  ============================================================ -->
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
+  <!-- ============================================================
+       EMAILJS SDK
+       Replace YOUR_PUBLIC_KEY in firebase-config.js
+  ============================================================ -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+
+<!-- ===== SITE HEADER ===== -->
+<header class="site-header" id="siteHeader">
+  <div class="container">
+    <nav class="nav-inner">
+      <a href="#" class="nav-logo" onclick="showPage('home');return false;">HAKUNA</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#" onclick="showPage('home');return false;" class="active" id="nav-home">Home</a></li>
+        <li><a href="#" onclick="showPage('home');scrollToSection('products');return false;">Wigs</a></li>
+        <li><a href="#" onclick="showPage('services');return false;" id="nav-services">Services</a></li>
+        <li><a href="#" onclick="showPage('about');return false;" id="nav-about">About</a></li>
+        <li><a href="#" onclick="showPage('stylists');return false;" id="nav-stylists">Stylists</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="nav-cart-btn" aria-label="Shopping bag">
+          <span class="material-symbols-outlined">shopping_bag</span>
+        </button>
+        <button class="btn-book" onclick="showPage('services');return false;">Book Now</button>
+        <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+          <span class="material-symbols-outlined" id="menuIcon">menu</span>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- Mobile Menu -->
+<nav class="mobile-menu" id="mobileMenu">
+  <a href="#" onclick="showPage('home');closeMobileMenu();return false;">Home</a>
+  <a href="#" onclick="showPage('home');scrollToSection('products');closeMobileMenu();return false;">Wigs</a>
+  <a href="#" onclick="showPage('services');closeMobileMenu();return false;">Services & Pricing</a>
+  <a href="#" onclick="showPage('about');closeMobileMenu();return false;">About Us</a>
+  <a href="#" onclick="showPage('stylists');closeMobileMenu();return false;">Our Stylists</a>
+</nav>
+
+<!-- ===================== PAGE: HOME ===================== -->
+<main id="page-home" class="page active">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-img">
+      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHUDx3QzxTsg5EEFeovFU1Xe7gvSRS7FqAkGZwaASn2qrVg9x_3txoGjE551xqO712iV_wtv7Pq8bFfCTmtpq9ReE6qifokCu0u3u_-03XdUr478UYkpMt4OR4fiHqM5Ds_mBUipbCgSVRjh8qsDA2vRORgGFpzLvPCWeX5Ne30LfXWt0bZ7xB6U0PbXiEIbjKVu_woq1d7UrKckLwF70b_WIM8w8tdXVtEDnHwJpB0AaGlTqgShjZqVvMbbm4wkyYyonEzbTuCOI" alt="Luxurious Nigerian woman with flowing human hair"/>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="container">
+      <div class="hero-content reveal">
+        <h1 class="display-xl hero-title">Your Crown,<br/>Perfected</h1>
+        <p class="body-lg hero-subtitle">Premium Human Hair — Wigs, Extensions & Styling by Nigerian Experts. Discover the ultimate expression of your natural beauty.</p>
+        <div class="hero-cta">
+          <a href="#" class="btn-primary" onclick="scrollToSection('products');return false;">
+            Shop Wigs <span class="material-symbols-outlined" style="font-size:18px;">arrow_forward</span>
+          </a>
+          <a href="#" class="btn-outline" onclick="showPage('services');return false;">Book a Stylist</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="marquee-strip">
+    <div class="marquee-track">
+      <span class="marquee-item">100% Human Hair<span class="marquee-dot">●</span>Nairobi Curls<span class="marquee-dot">●</span>Straight<span class="marquee-dot">●</span>Body Wave<span class="marquee-dot">●</span>Closures<span class="marquee-dot">●</span>Frontals<span class="marquee-dot">●</span>Free Delivery in Abuja<span class="marquee-dot">●</span></span>
+      <span class="marquee-item">100% Human Hair<span class="marquee-dot">●</span>Nairobi Curls<span class="marquee-dot">●</span>Straight<span class="marquee-dot">●</span>Body Wave<span class="marquee-dot">●</span>Closures<span class="marquee-dot">●</span>Frontals<span class="marquee-dot">●</span>Free Delivery in Abuja<span class="marquee-dot">●</span></span>
+      <span class="marquee-item">100% Human Hair<span class="marquee-dot">●</span>Nairobi Curls<span class="marquee-dot">●</span>Straight<span class="marquee-dot">●</span>Body Wave<span class="marquee-dot">●</span>Closures<span class="marquee-dot">●</span>Frontals<span class="marquee-dot">●</span>Free Delivery in Abuja<span class="marquee-dot">●</span></span>
+    </div>
+  </div>
+
+  <!-- Featured Products -->
+  <section class="section-lg" id="products">
+    <div class="container">
+      <div class="section-header reveal">
+        <div>
+          <p class="section-eyebrow">The Collection</p>
+          <h2 class="headline-md section-title">Signature Wigs</h2>
+        </div>
+        <a href="#" class="link-underline">View All Products</a>
+      </div>
+      <div class="products-grid">
+        <div class="product-card reveal">
+          <div class="product-card-img">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLOHJTCF60vkaJUXMTefREkM-V6yrLlWHJujUNBRYSvPTa_C_RA-wUyZfGq_kmaAhwuHdFBJ5qq0_EMnh0_PKMJEktZqSj7Xe-o6VZj81t50B6obNEMtRe2lLbo_FzMJL3jq5v2XJh9rp9vZdM-AFx4X-yqjA8mwmuFgKV9G2ZXm1c-p_hDtUS_nTbwfRDp8vP74qpALvxx2OwL4uBQJO-Cz3lA1hTakrd4IXj7af_3USohOyKraO9ZIBUOOIyds-zr8TYrf57VKY" alt="Ebony Silk Wave"/>
+            <span class="product-badge">12 Inch</span>
+            <div class="product-cta">View Details</div>
+          </div>
+          <h3 class="product-name">Ebony Silk Wave</h3>
+          <p class="product-price">₦185,000</p>
+        </div>
+        <div class="product-card reveal reveal-delay-1">
+          <div class="product-card-img">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJ4V0bitViIgT7EQavsL-el6cWSj0ZvCdONM9QHPUN6foIphzrwb-SA1sz9fAznVcZQctYoJGaKDcEniaQjD_YHk9eOjQlJGhTpA_UQmBzO6WT3ktu668QXeRK0BFIxuVBZz763UOFwY2Z3w-pfDILHGMNKMstyaPWU1BuCtty9NNMnVew_WDWJ92HQ3bxCFSbvC0MYxNPC45yU6HI_o0txVq_Jj8skcrw32Mej0vjKHnBEog6USYdD-bXEaSLixUFRmRLFZ63mnY" alt="Lagos Sleek Straight"/>
+            <span class="product-badge">16 Inch</span>
+            <div class="product-cta">View Details</div>
+          </div>
+          <h3 class="product-name">Lagos Sleek Straight</h3>
+          <p class="product-price">₦240,000</p>
+        </div>
+        <div class="product-card reveal reveal-delay-2">
+          <div class="product-card-img">
+            <img src="royal-body-volume.jpg" alt="Royal Body Volume"/>
+            <span class="product-badge">22 Inch</span>
+            <div class="product-cta">View Details</div>
+          </div>
+          <h3 class="product-name">Royal Body Volume</h3>
+          <p class="product-price">₦315,000</p>
+        </div>
+        <div class="product-card reveal reveal-delay-3">
+          <div class="product-card-img">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_G6isSsGpIq0cJJ1ti9mMmVZE3sAFRLe3DjWEHeiqKyJa6O3hKl6jPBoGRINqQFNT-xev8hbI9gcd9iCw6X31GNnqjeSFuZaBUHwvB7nzxvBrqnEO1HgWPyfSSFSATL4H5hfZM2oSzdfAFMiF9ODHrH0-rSv8KVbs2PPYsHbcN-hKzEqdq5i0JS9K_pXMt01QtPAttKaMiwP3n2zCY4GUgtLAb7gohDdvvuFFMDUs2vTyVsmOfCC0bdPPgbkH89GNDq3nRpi-_PI" alt="Queen Essence Bone Straight"/>
+            <span class="product-badge">26 Inch</span>
+            <div class="product-cta">View Details</div>
+          </div>
+          <h3 class="product-name">Queen Essence Bone Straight</h3>
+          <p class="product-price">₦420,000</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ankara Divider -->
+  <div class="container"><div class="ankara-divider"></div></div>
+
+  <!-- Why Hakuna -->
+  <section class="section-lg" style="background: var(--surface-low);">
+    <div class="container">
+      <div class="text-center mb-8 reveal" style="margin-bottom:48px;">
+        <p class="section-eyebrow">The Hakuna Difference</p>
+        <h2 class="headline-md section-title mt-2">Why Choose Our Hair?</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-card reveal">
+          <span class="material-symbols-outlined why-icon">verified_user</span>
+          <h4 class="why-title">100% Human Hair</h4>
+          <p class="why-text">Ethically sourced, virgin donor hair with intact cuticles for lifelong luster and zero tangling.</p>
+        </div>
+        <div class="why-card reveal reveal-delay-1">
+          <span class="material-symbols-outlined why-icon">content_cut</span>
+          <h4 class="why-title">Expert Stylists</h4>
+          <p class="why-text">Professional installation and customization by Nigeria's leading hair artisans and colorists.</p>
+        </div>
+        <div class="why-card reveal reveal-delay-2">
+          <span class="material-symbols-outlined why-icon">local_shipping</span>
+          <h4 class="why-title">Same-Day Delivery</h4>
+          <p class="why-text">Order before noon and get your hair today within Abuja. National delivery in 48 hours.</p>
+        </div>
+        <div class="why-card reveal reveal-delay-3">
+          <span class="material-symbols-outlined why-icon">support_agent</span>
+          <h4 class="why-title">Aftersales Support</h4>
+          <p class="why-text">We don't just sell hair; we teach you how to maintain it. Lifetime care guidance included.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust Strip -->
+  <div class="trust-strip">
+    <div class="trust-items">
+      <div class="trust-item"><span class="material-symbols-outlined">newspaper</span>As Seen in Vogue Nigeria</div>
+      <div class="trust-item"><span class="material-symbols-outlined">verified</span>Google Verified Shop</div>
+      <div class="trust-item"><span class="material-symbols-outlined">emoji_events</span>Top-Rated Supplier 2023</div>
+
+    </div>
+  </div>
+
+  <!-- Instagram Community -->
+  <section class="section-lg">
+    <div class="container reveal" style="margin-bottom:32px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <h2 class="headline-md section-title">Join Our Community</h2>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span class="material-symbols-outlined text-gold">camera_alt</span>
+          <a href="https://www.instagram.com/hakuna_humanhair/" target="_blank" rel="noopener noreferrer" class="label-caps" style="color:var(--gold); text-decoration:none;">@hakuna_humanhair</a>
+        </div>
+      </div>
+    </div>
+    <div class="instagram-grid">
+      <div class="insta-item"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0YoCzZuO4u-M6xBuAV0YinKkmVl0UqH_k8Y00FWO7Cs0yDGEVHXCFdb7kvDbBFT965RVAWRrTIu36PPvZF7CCN1hkzD1nALtN-YWVvbDuWT1JtedYbhLb9KHx9QJILGUXGOMH850Xqr6welT1p4cIQMukgbYy8GvN71RyT0N0dc0REora8cNWdim6K3VS0lgzMCly8DCjtbm3SOPLUQp1TbvQ2_mhaOw2Dv9QsDFLfu3_UlE0oEvDcAgqFMThuHy_xoOCIDkc4CE" alt="Instagram post 1"/><div class="insta-overlay"><span class="material-symbols-outlined">favorite</span></div></div>
+      <div class="insta-item"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXWK_Kf3jJ5y_f9QWhh3eFYgErfWdmtNKxMoYWHP9_6ZI0E7CkTOdHqWGQKqRRyecuZK4ePyre2gor5D5mJjijVUpWlseKIsdFo0KnmuDE31dYm6XCxSkLNwHIClPhRdHGetK6DzHR4rlLQXBQjBh1VvbgFAlnMh9xt8Qd5QerTod02uGaA7RIp93kYb6dmumqllAvOI4UWOAnQRnu05yrz3LhKvACEgT-KyEBw0M1F2fRR8RDB_461h1xQDkdftyogjFd3F8L6eI" alt="Instagram post 2"/><div class="insta-overlay"><span class="material-symbols-outlined">favorite</span></div></div>
+      <div class="insta-item"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUbmgSsQnfvgQ-oErkZnKkV-luUiU4hM23hpvZ3vkQu7HJFslmi7Py6WLqwiRLtyzLUEdu4oK8LY4PeePhZyYVfG-GlsnFsJHtrUjRlNltryCh_UopL4hq7ib41aj4J6ZI6LQzvTHpb5wnNSokWXE5JPRFFveRgrKMRn2eNozPSDnEfuSTJymeX4RPRVFv3ELOplAucVmlkNl3oc8slpwXeu7J0lmOoce6Sz9lB7JIrK-jKPz2sJe1Q4aAL35hb4yGo4wQ_Bm1h_s" alt="Instagram post 3"/><div class="insta-overlay"><span class="material-symbols-outlined">favorite</span></div></div>
+      <div class="insta-item"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOtnipaysxWoh6e_3GRBDfFAo4V7zoPDVh84kbH4kHkIX61BWF5Zzg_DDDTTr5FpvjdHkup_bQJHLWnMTWAMJ-AAyj88VCK-ydksGdxVFjOrwSuCky_KmImzFd_sQAz8leWDoafoO5soXqiBYYbpohjl-FxCZgLUGBIgcrIAJJFcjnJ8aVkE-nuDh0jeERkOcS1wWMcxouvRb8H0ZSrNxAxFiC_mSqsEolbd9LFxBbha2WUtlLqSq7iwPyz7AG5uU8-gPQ6T5eYBE" alt="Instagram post 4"/><div class="insta-overlay"><span class="material-symbols-outlined">favorite</span></div></div>
+      <div class="insta-item"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDa2ajsgSoERwshSXFNrVqaABMO0N_HcBxxAlDEF1Z-x_7YV7vcIZYB_XiW2KSreHzSWCLER8aw44wvReFUJ6zEwo37JaVb3xFdo0NUpfhrNzFXLVAP3aXlHhPTSdEXoSE9qR6qS8FF1Cj-CINSJzsEigEWpJ98zKauQPkTeF_Q5weN4N19tTyuGYA83Hg1BIj5W5ZlZ88uCkVH28IrpoGy5R4qTVclTfvSKhGeUx54HXEfAzUhTH_aTZzqdz6TTA3NJWQhA0J4Jvo" alt="Instagram post 5"/><div class="insta-overlay"><span class="material-symbols-outlined">favorite</span></div></div>
+      <div class="insta-item"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDG8DQWOzQGpjhAYjEVkAkiO8RKV_jB5AC-huGJ6IdV-gWherNB8IiExZbCU4EP9cm1nHuRKpqq-nwa_F_tFIISKt22l5JTJLSNeA1wE3A3rJzx3bVM8cwAgwe-V3bd0rHynH6h0u4buGzZ6HLnEACKWMM0IPY7_aU9IcszDcqjVxbkePfHmWCyvWJ7yOpckOLyKzrGCMwhor0XU-7WvjQPetGholgOYDzuBlimLNfLREUOF1BRT0l2Cfn3BtEzAbs-hyxFapsJTf8" alt="Instagram post 6"/><div class="insta-overlay"><span class="material-symbols-outlined">favorite</span></div></div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="section-md">
+    <div class="container">
+      <div class="newsletter-banner reveal">
+        <div class="newsletter-banner-bg"></div>
+        <div>
+          <h2 class="newsletter-title">Get 10% off your first order</h2>
+          <p class="newsletter-sub body-md">Join the Hakuna circle for exclusive access to new drops, styling tips from the experts, and member-only pricing.</p>
+        </div>
+        <div>
+          <form class="newsletter-form" onsubmit="return false;">
+            <input class="newsletter-input" type="email" placeholder="Your Email Address"/>
+            <button type="submit" class="btn-gold">Join Now</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ===================== PAGE: ABOUT ===================== -->
+<main id="page-about" class="page">
+  <div style="margin-top:68px;">
+    <div class="page-hero">
+      <div class="page-hero-overlay"></div>
+      <div class="page-hero-content">
+        <span class="page-hero-eyebrow">Our Legacy</span>
+        <h1 class="page-hero-title">Born in Nigeria.<br/>Made for Queens.</h1>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-bar">
+      <div class="container">
+        <div class="stats-grid">
+          <div><span class="stat-num">5+</span><span class="stat-label">Years in Business</span></div>
+          <div><span class="stat-num">143+</span><span class="stat-label">Happy Customers</span></div>
+          <div><span class="stat-num">8</span><span class="stat-label">Hair Designers</span></div>
+          <div><span class="stat-num">Abuja</span><span class="stat-label">Based & Proud</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Philosophy -->
+    <section class="section-lg">
+      <div class="container">
+        <div class="two-col">
+          <div class="reveal">
+            <span class="label-caps" style="color:var(--gold); display:block; margin-bottom:8px;">Since 2019</span>
+            <h2 class="headline-md section-title" style="margin-bottom:20px;">The Hakuna Philosophy</h2>
+            <p class="body-lg text-grey" style="margin-bottom:20px;">Hakuna means "No Trouble." It means peace, calm, and an unshakeable confidence in who you are. We built this brand on one belief: every Nigerian woman deserves to wear a crown that truly reflects her power.</p>
+            <p class="body-md text-grey">From our flagship Abuja showroom, we craft and curate only the finest 100% virgin human hair — sourced ethically, handled with expertise, and delivered with care. Each wig is a work of art. Each extension, a promise of quality that lasts.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ankara Divider -->
+    <div class="container"><div class="ankara-divider"></div></div>
+
+    <!-- Founder -->
+    <section class="section-lg" style="background:var(--surface-low);">
+      <div class="container">
+        <div class="two-col reverse">
+          <div class="reveal">
+            <span class="label-caps text-gold" style="display:block; margin-bottom:8px;">The Visionary</span>
+            <h2 class="headline-md section-title" style="margin-bottom:24px;">Chinwe Hakuna</h2>
+            <blockquote>"I wanted to create a space where Nigerian women could access world-class hair without compromise — hair that feels like it was made just for them, because it was."</blockquote>
+            <p class="body-md text-grey">With a background in fashion and a passion for celebrating African beauty, Chinwe founded HAKUNA in 2019. Today, the brand is Abuja's most trusted name in premium human hair.</p>
+          </div>
+          <div class="reveal">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAc-bwYHruqT_3P68XRjTxpysAiqfH2rk_hP-qHU34ukBgAAtTaG-rtkwHBkFkHRFz3MDjlVkT-Wm8LhD5X8PGKL58U9mxBb3TwtHHm8xB4e3b-1tXUL8UKpYFLHJg-b6eLKFY28Z2bsAuiAkfSMdH8k5HGzwC6nLCAByvFXvHaI0txVq_Jj8skcrw32Mej0vjKHnBEog6USYdD-bXEaSLixUFRmRLFZ63mnY-uiXex-hmXNJBnEaG1oVAR3kSG_FTq3ZhCmXLA" alt="Chinwe Hakuna, Founder"/>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Values -->
+    <section class="section-lg">
+      <div class="container">
+        <div class="text-center reveal" style="margin-bottom:48px;">
+          <p class="section-eyebrow">What We Stand For</p>
+          <h2 class="headline-md section-title mt-2">Our Core Values</h2>
+        </div>
+        <div class="values-grid">
+          <div class="value-card reveal">
+            <h4 class="value-card-title">Quality First</h4>
+            <p class="body-sm text-grey">We never compromise. Every strand is tested for durability and natural luster before it leaves our showroom.</p>
+          </div>
+          <div class="value-card reveal reveal-delay-1">
+            <h4 class="value-card-title">Authenticity</h4>
+            <p class="body-sm text-grey">100% human hair. No synthetic fillers. We believe in the beauty of truth and the power of natural textures.</p>
+          </div>
+          <div class="value-card reveal reveal-delay-2">
+            <h4 class="value-card-title">Customer Love</h4>
+            <p class="body-sm text-grey">Our relationship doesn't end at checkout. We are partners in your hair journey, offering expert care advice and styling.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Visit Studio -->
+    <section class="section-md" style="background: var(--forest-dark); color: white;">
+      <div class="container">
+        <div class="two-col">
+          <div class="reveal">
+            <p class="section-eyebrow" style="color:var(--gold-light);">Come See Us</p>
+            <h2 class="headline-md" style="color:white; margin-bottom:20px;">Visit Our Studio</h2>
+            <p class="body-md" style="color:rgba(144,214,137,0.8); margin-bottom:28px;">Experience the HAKUNA quality in person at our flagship Abuja showroom.</p>
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span class="material-symbols-outlined" style="color:var(--gold); font-size:20px;">location_on</span>
+                <span class="body-sm" style="color:rgba(255,255,255,0.75);">Utako Zuma Garden, Abuja, Nigeria</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span class="material-symbols-outlined" style="color:var(--gold); font-size:20px;">phone</span>
+                <span class="body-sm" style="color:rgba(255,255,255,0.75);">+234 904 320 0000</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span class="material-symbols-outlined" style="color:var(--gold); font-size:20px;">schedule</span>
+                <span class="body-sm" style="color:rgba(255,255,255,0.75);">Mon – Sat: 9am – 6pm</span>
+              </div>
+            </div>
+          </div>
+          <div class="reveal" style="border-radius:8px; overflow:hidden; aspect-ratio:16/9;">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrQS09T09SMAlBbg4qIeXe5WlKnCAJx9XGZpFUX3LWX6aQSnXXVrz5y_tvbLYaxxpiHlHQ4MjP3DyNpTPA8bcE2iod3XX20J_GThenR5u5Cb7UEVi-eAkV6QR97qC34FB1SJSzUCL5S8By0KTK82ChB6dytoljJA93cDoy7bxEJNBuFwkjX_fXz-9Bbf9E6nqk1G8KLE9q4ese7CDNKPcrV6nUUELGWc6BALEMwicCuC-MEN9Sj0ct2VUL9itjHRs5B3TdmRuKa34" alt="Lagos Map" style="width:100%; height:100%; object-fit:cover; filter:grayscale(50%) brightness(0.7);"/>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- ===================== PAGE: SERVICES ===================== -->
+<main id="page-services" class="page">
+  <div style="margin-top:68px;">
+    <div class="page-hero">
+      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcgL8W9lhlp-hsOiUQnnDU7Oc5zzvczMR4aUo_OkXJLA1Hb3IPpjHQ0fxjgTTlEl8h6172uezCoxUpCDIcxukpRej8we0Daf4_snOOTOxZ1DgFuQf8bcjYK0xLCOVxOeEfOT-_s8X4HngMp277rH7MeFOHoqgJWCYySnGHEeOMmOAF7B4DE8RuU3ldmEHZTm9C4NUNEeaPMgiLEw0syMdkYxlbzbiUcEmp9j9s95IkTwM6pvboYV80_NNnfrYVguV1OOmFcTr8VOI" alt="Services"/>
+      <div class="page-hero-overlay"></div>
+      <div class="page-hero-content">
+        <span class="page-hero-eyebrow">Premium Services</span>
+        <h1 class="page-hero-title">What We Offer</h1>
+      </div>
+    </div>
+
+    <!-- Service Menu -->
+    <section class="section-lg">
+      <div class="container">
+        <div class="section-header reveal">
+          <div>
+            <p class="section-eyebrow">The Menu</p>
+            <h2 class="headline-md section-title">Service Pricing</h2>
+          </div>
+        </div>
+        <div class="services-list reveal">
+          <div class="service-row">
+            <div>
+              <h3 class="service-name">Wig Installation</h3>
+              <p class="service-desc">Full installation with glue or tape, styling included</p>
+            </div>
+            <span class="service-price">₦8,000</span>
+          </div>
+          <div class="service-row">
+            <div>
+              <h3 class="service-name">Wig Customization</h3>
+              <p class="service-desc">Bleaching knots, plucking hairline, baby hair styling</p>
+            </div>
+            <span class="service-price">₦5,000</span>
+          </div>
+          <div class="service-row">
+            <div>
+              <h3 class="service-name">Hair Coloring</h3>
+              <p class="service-desc">Full single-process color transformation on virgin hair</p>
+            </div>
+            <span class="service-price">₦15,000</span>
+          </div>
+          <div class="service-row">
+            <div>
+              <h3 class="service-name">Balayage / Highlights</h3>
+              <p class="service-desc">Hand-painted, sun-kissed tonal color with expert blending</p>
+            </div>
+            <span class="service-price">₦20,000</span>
+          </div>
+          <div class="service-row">
+            <div>
+              <h3 class="service-name">Hair Treatment</h3>
+              <p class="service-desc">Deep conditioning and protein treatment to restore vitality</p>
+            </div>
+            <span class="service-price">₦4,500</span>
+          </div>
+          <div class="service-row">
+            <div>
+              <h3 class="service-name">Weave & Sew-In</h3>
+              <p class="service-desc">Professional track-laying and weave installation with cornrows</p>
+            </div>
+            <span class="service-price">₦10,000</span>
+          </div>
+          <div class="service-row">
+            <div>
+              <h3 class="service-name">Frontal Installation</h3>
+              <p class="service-desc">13×4 or 13×6 lace frontal melting and styling</p>
+            </div>
+            <span class="service-price">₦12,000</span>
+          </div>
+          <div class="service-row">
+            <div>
+              <h3 class="service-name">Full Maintenance Package</h3>
+              <p class="service-desc">Wash, condition, style and root touch-up — all inclusive</p>
+            </div>
+            <span class="service-price">₦25,000</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BOOKING FORM — Production-Ready Appointment System
+         Connects to: Firebase Firestore + EmailJS
+         Handled by: booking.js
+    ============================================================ -->
+    <div class="booking-form-wrap" id="bookingSection">
+      <div class="container">
+        <div class="text-center reveal" style="margin-bottom:40px;">
+          <p class="section-eyebrow" style="color:var(--gold-light);">Book Your Appointment</p>
+          <h2 class="display-lg" style="color:white;">Secure Your Session</h2>
+        </div>
+
+        <div class="booking-form reveal">
+
+          <!-- SUCCESS STATE — shown after successful submission -->
+          <div id="bookingSuccess" style="display:none; text-align:center; padding:48px 24px;">
+            <span class="material-symbols-outlined" style="font-size:4rem; color:var(--forest); display:block; margin-bottom:16px;">check_circle</span>
+            <h3 style="font-family:var(--font-serif); font-size:1.75rem; color:var(--forest-dark); margin-bottom:12px;">Appointment Booked!</h3>
+            <p style="color:var(--warm-grey); margin-bottom:8px;">Thank you! Your appointment has been saved and a confirmation email is on its way.</p>
+            <p style="color:var(--warm-grey); font-size:0.875rem; margin-bottom:32px;">Didn't get the email? Check your spam folder or WhatsApp us.</p>
+            <button onclick="resetBookingForm()" class="btn-outline" style="margin-inline:auto;">
+              Book Another Appointment
+            </button>
+          </div>
+
+          <!-- ERROR BANNER — shown if submission fails -->
+          <div id="bookingError" style="display:none; background:#fff0f0; border:1px solid #ffcccc; border-radius:6px; padding:14px 18px; margin-bottom:24px; font-size:0.9rem; color:#c0392b;">
+            <span class="material-symbols-outlined" style="font-size:18px; vertical-align:middle; margin-right:6px;">error</span>
+            <span id="bookingErrorMsg">Something went wrong. Please try again.</span>
+          </div>
+
+          <!-- THE FORM -->
+          <form id="bookingForm" novalidate>
+
+            <!-- Full Name -->
+            <div class="form-group">
+              <label class="form-label" for="appt-name">Full Name <span style="color:#c0392b;">*</span></label>
+              <input
+                class="form-input"
+                type="text"
+                id="appt-name"
+                name="fullName"
+                placeholder="e.g. Amara Okonkwo"
+                autocomplete="name"
+                required
+              />
+              <span class="form-error" id="err-name"></span>
+            </div>
+
+            <!-- Email Address -->
+            <div class="form-group">
+              <label class="form-label" for="appt-email">Email Address <span style="color:#c0392b;">*</span></label>
+              <input
+                class="form-input"
+                type="email"
+                id="appt-email"
+                name="email"
+                placeholder="e.g. amara@email.com"
+                autocomplete="email"
+                required
+              />
+              <span class="form-error" id="err-email"></span>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="form-group">
+              <label class="form-label" for="appt-phone">Phone Number <span style="color:#c0392b;">*</span></label>
+              <input
+                class="form-input"
+                type="tel"
+                id="appt-phone"
+                name="phone"
+                placeholder="+234 xxx xxx xxxx"
+                autocomplete="tel"
+                required
+              />
+              <span class="form-error" id="err-phone"></span>
+            </div>
+
+            <!-- Service -->
+            <div class="form-group">
+              <label class="form-label" for="appt-service">Service <span style="color:#c0392b;">*</span></label>
+              <select class="form-select" id="appt-service" name="service" required>
+                <option value="">— Select a service —</option>
+                <option value="Wig Installation">Wig Installation — ₦8,000</option>
+                <option value="Wig Customization">Wig Customization — ₦5,000</option>
+                <option value="Hair Coloring">Hair Coloring — ₦15,000</option>
+                <option value="Balayage / Highlights">Balayage / Highlights — ₦20,000</option>
+                <option value="Hair Treatment">Hair Treatment — ₦4,500</option>
+                <option value="Weave & Sew-In">Weave & Sew-In — ₦10,000</option>
+                <option value="Frontal Installation">Frontal Installation — ₦12,000</option>
+                <option value="Full Maintenance Package">Full Maintenance Package — ₦25,000</option>
+              </select>
+              <span class="form-error" id="err-service"></span>
+            </div>
+
+            <!-- Preferred Date -->
+            <div class="form-group">
+              <label class="form-label" for="appt-date">Preferred Date <span style="color:#c0392b;">*</span></label>
+              <input
+                class="form-input"
+                type="date"
+                id="appt-date"
+                name="preferredDate"
+                required
+              />
+              <span class="form-error" id="err-date"></span>
+            </div>
+
+            <!-- Additional Notes -->
+            <div class="form-group">
+              <label class="form-label" for="appt-notes">Additional Notes <span style="color:var(--warm-grey); font-weight:400;">(optional)</span></label>
+              <textarea
+                class="form-textarea"
+                id="appt-notes"
+                name="notes"
+                placeholder="Any special requirements, allergies, or questions..."
+              ></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button
+              type="submit"
+              id="bookingSubmitBtn"
+              class="btn-primary"
+              style="width:100%; justify-content:center; margin-top:8px;"
+            >
+              <!-- Default state -->
+              <span id="btnText">Book Appointment</span>
+              <span class="material-symbols-outlined" id="btnIcon" style="font-size:18px;">arrow_forward</span>
+              <!-- Loading state (hidden by default) -->
+              <span id="btnSpinner" style="display:none; font-size:18px;" class="material-symbols-outlined btn-spinner">autorenew</span>
+            </button>
+
+          </form><!-- /#bookingForm -->
+        </div><!-- /.booking-form -->
+      </div>
+    </div><!-- /.booking-form-wrap -->
+
+    <!-- FAQ -->
+    <section class="section-lg">
+      <div class="container">
+        <div class="text-center reveal" style="margin-bottom:48px;">
+          <p class="section-eyebrow">Got Questions?</p>
+          <h2 class="headline-md section-title mt-2">Frequently Asked</h2>
+        </div>
+        <div style="max-width:720px; margin-inline:auto;">
+          <div class="faq-item reveal">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              How long does a wig installation take?
+              <span class="material-symbols-outlined">expand_more</span>
+            </div>
+            <div class="faq-answer">A standard wig installation takes 1–2 hours depending on the method (glue, tape, or sew-in). Customization like bleaching and plucking can add another 30–60 minutes.</div>
+          </div>
+          <div class="faq-item reveal">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Do you offer same-day delivery in Abuja?
+              <span class="material-symbols-outlined">expand_more</span>
+            </div>
+            <div class="faq-answer">Yes! Orders placed before 12pm Monday–Saturday qualify for same-day delivery within Abuja. A small delivery fee applies based on your location.</div>
+          </div>
+          <div class="faq-item reveal">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              What's the difference between closure and frontal wigs?
+              <span class="material-symbols-outlined">expand_more</span>
+            </div>
+            <div class="faq-answer">A closure covers a 4×4 or 5×5 area at the top of the head, while a frontal spans the entire hairline from ear to ear (13×4 or 13×6). Frontals allow more versatile styling including side-parting and updos.</div>
+          </div>
+          <div class="faq-item reveal">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              How do I care for my Hakuna wig?
+              <span class="material-symbols-outlined">expand_more</span>
+            </div>
+            <div class="faq-answer">We recommend washing with sulfate-free shampoo every 2–4 weeks, air-drying, and storing on a wig stand. Our stylists provide a personalized care guide with every purchase. Avoid excessive heat without a heat protectant.</div>
+          </div>
+          <div class="faq-item reveal">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Can I return or exchange a wig?
+              <span class="material-symbols-outlined">expand_more</span>
+            </div>
+            <div class="faq-answer">Unworn and uncut wigs in original packaging can be returned within 7 days for store credit or exchange. Once a wig has been installed or cut, it cannot be returned for hygiene reasons.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- ===================== PAGE: STYLISTS ===================== -->
+<main id="page-stylists" class="page">
+  <div style="margin-top:68px;">
+    <div class="page-hero">
+      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAD1KXqZqcF9nMCWEIGmKDmdkoHJus-EN5n-Hdvqo_DlJJwLaGfgZ9fNV2WutsIXKP-CTkKEnQXpHbP5PYP_am0DvVAPk1NeYxZb-K1R4z_fVPtGDaAkdjVkhnUCWSvtwA-Bj98JDWHQBaItPCiSwoMGvIvg3x9VMQdfMfIHdU1ac0rmW6fdKjz12-DhhqHC5uNd9ye8rtn2k6d5NysI0oB2W3FwbCnmSwQPFDbCkXNIuSZkIKMrERD00wh9pnIXZK3lZuGu83tStY" alt="Our Stylists" style="object-position: center 25%;"/>
+      <div class="page-hero-overlay"></div>
+      <div class="page-hero-content">
+        <span class="page-hero-eyebrow">The Artists</span>
+        <h1 class="page-hero-title">Meet Our Stylists</h1>
+      </div>
+    </div>
+
+    <!-- Featured Stylist -->
+    <section class="section-lg">
+      <div class="container">
+        <div class="featured-stylist">
+          <div class="featured-stylist-img reveal">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDn9-3NOXcViAmhSoqKzXowX1GFJqB0n2XoqOnd8_vg8iazQdKvhqVqBDb88I0jH56n696swKqJZvjHf5Mex7BdYX3ph-DRuSsO290XxYxc-aqbT5puqZ-e1-LXma9s3CfqrMiworj-_3tVUMHSpf-m8P7nO7u2H_RtoLwWRMpmft1tVdcsl5ccvftkfBIaTJTF5nUFtB59jNXHHFA1cCMc60JH0C1WKMfkdavx4KlZmf4sQjhKPjl9Lmf3coTSI2mh53r9el2B2ZE" alt="Adesua Okonjo — Head Stylist"/>
+          </div>
+          <div class="reveal">
+            <span class="label-caps text-gold" style="display:block; margin-bottom:8px;">Head Stylist & Creative Director</span>
+            <h2 class="headline-md section-title" style="margin-bottom:20px;">Adesua Okonjo</h2>
+            <blockquote>"Hair is not just aesthetics — it is memory, identity, and courage all at once. My work is helping women remember who they are."</blockquote>
+            <p class="body-md text-grey" style="margin-bottom:24px;">With over 12 years of experience across Abuja and London, Adesua leads the Hakuna creative vision. She has styled for Vogue Nigeria, countless runway shows, and hundreds of brides. Her specialty is the undetectable lace melt.</p>
+            <div style="display:flex; gap:12px; flex-wrap:wrap;">
+              <span class="product-badge" style="position:static; font-size:0.625rem; padding:6px 14px;">Lace Specialist</span>
+              <span class="product-badge" style="position:static; font-size:0.625rem; padding:6px 14px; background:var(--gold); color:var(--espresso);">Color Expert</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ankara Divider -->
+    <div class="container"><div class="ankara-divider"></div></div>
+
+    <!-- Team Grid -->
+    <section class="section-lg" style="background:var(--surface-low);">
+      <div class="container">
+        <div class="section-header reveal">
+          <div>
+            <p class="section-eyebrow">The Full Team</p>
+            <h2 class="headline-md section-title">Our Expert Artisans</h2>
+          </div>
+        </div>
+        <div class="team-grid">
+          <div class="team-card reveal">
+            <div class="team-card-img">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsVbdpII3IzP6L3gxfrem0mu7z3udv4NjZSblf4Bj1q2IddiqIK1CKv9TApYPZ6pcJXmzMDFv9tjsqoZdjIjwgQumOC1ACH_KM343o1L8UwtKDoP3A_DSMEpNnpi7735zF8VxZNYYpyBIHc-8zo0zrSaDzeITberlXT5XOGv7D1w02AE1W9Ruzc5Bgzjv88LeeMI78gazpEqgy7C4mV74BHzqeVuyhF4FUHN-ALakcZXiqJktzyG08SGyde0iUqBCohoAPucQHW1E" alt="Chinelo Amadi"/>
+            </div>
+            <h3 class="team-name">Chinelo Amadi</h3>
+            <p class="team-role">Senior Stylist</p>
+            <span class="team-specialty">Weave & Extensions</span>
+          </div>
+          <div class="team-card reveal reveal-delay-1">
+            <div class="team-card-img">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwvBnMYLqCncKJ3tOTVaFYoKicqKusvZ9QDyIlAwG7yJUqps4tZuowlZVgBXP7zChJXXxZVShvoi944TDPellr_O12KlXH8y44gpx9B9YFN8UFhceD4Zug_O3SSXuRUxJCvtvV9naKH2byLgstI-698VT6DUsCiOSYVRq8d7Ytpd2ck_qFHgjbe9gwASHQRY2_d7l3Hk9T1MnZnLStKj97URRAnfkII9BHtLj-PZ-oIFRN5RqannuTgStE9rT70O-pwsydl9_Z6JQ" alt="Zainab Yusuf"/>
+            </div>
+            <h3 class="team-name">Zainab Yusuf</h3>
+            <p class="team-role">Color Specialist</p>
+            <span class="team-specialty">Balayage & Toning</span>
+          </div>
+          <div class="team-card reveal reveal-delay-2">
+            <div class="team-card-img">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEAk7xaOlB0LTlWVewrQ15s2i3dhz7f72ggU54-jwgGyNyAO5TEpN74cxRTZUHqkiunW0y56AlCWWwYNHSc2FdhXYGsFldUJ9PcBb_yQfNCseaSh-iXgOw3eUG6v-WY7igHUHUCyU0kQPfL7rPR1yrNUMtPg5jksLST7L8SLy0ObFgEM8h1LMFtX_MzgPwitiYfJlPhh02OtOj3A7aGJdRBH499_w20Ctz2VvMeijvj1e7lOln41eMOE6aXErGfxYPbFfL5UCWFSU" alt="Funke Balogun"/>
+            </div>
+            <h3 class="team-name">Funke Balogun</h3>
+            <p class="team-role">Wig Artisan</p>
+            <span class="team-specialty">Custom Construction</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Join CTA -->
+    <section class="section-md" style="background:var(--forest-dark);">
+      <div class="container text-center reveal">
+        <p class="section-eyebrow" style="color:var(--gold-light);">Join the Team</p>
+        <h2 class="headline-md" style="color:white; margin-bottom:16px; margin-top:8px;">Are You a Talented Hair Stylist?</h2>
+        <p class="body-md" style="color:rgba(144,214,137,0.75); max-width:480px; margin:0 auto 32px;">We're always looking for passionate, skilled hair artists to join the Hakuna family. Apply below.</p>
+        <a href="#" class="btn-primary">Apply Now <span class="material-symbols-outlined" style="font-size:18px;">arrow_forward</span></a>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- ===================== SHARED FOOTER ===================== -->
+<footer class="site-footer" id="siteFooter">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">HAKUNA</div>
+        <p class="footer-tagline">Elevating Nigerian beauty through premium craftsmanship and authentic human hair experiences.</p>
+      </div>
+      <div>
+        <h5 class="footer-heading">Shop</h5>
+        <ul class="footer-links">
+          <li><a href="#">Lace Wigs</a></li>
+          <li><a href="#">Hair Bundles</a></li>
+          <li><a href="#">Closures & Frontals</a></li>
+          <li><a href="#">Styling Products</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="footer-heading">Company</h5>
+        <ul class="footer-links">
+          <li><a href="#" onclick="showPage('about');return false;">Our Story</a></li>
+          <li><a href="#" onclick="showPage('stylists');return false;">Stylists</a></li>
+          <li><a href="#" onclick="showPage('services');return false;">Services</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="footer-heading">Follow Us</h5>
+        <ul class="footer-links">
+          <li><a href="https://www.instagram.com/hakuna_humanhair/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          <li><a href="https://www.facebook.com/1046244258575279/" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+          <li><a href="#">TikTok</a></li>
+          <li><a href="#">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2024 HAKUNA HUMAN HAIR COMPANY LTD. Your Crown, Perfected.</p>
+      <p class="footer-copy" style="font-size:0.75rem; color:var(--gold);">Abuja · Nigeria</p>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp FAB -->
+<a href="https://wa.me/2349043200000" target="_blank" rel="noopener noreferrer" class="fab-whatsapp" aria-label="Chat on WhatsApp">
+  <span class="material-symbols-outlined">chat</span>
+  WhatsApp
+</a>
+
+<!-- Load config first (Firebase + EmailJS keys), then booking logic, then main UI -->
+<script src="firebase-config.js"></script>
+<script src="booking.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
